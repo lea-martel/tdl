@@ -14,6 +14,7 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/style.css">
     <title>Connexion</title>
 </head>
@@ -32,12 +33,13 @@
                 <input type="password" id="password" name="password" class="input-form">
             </div>
             <h6 class="info">Pas encore inscrit <a class="lien" href="inscription.php">cliquez-ici</a></h6>
-            <div class="error"></div>
-            <input type="hidden" id="inscription" value="inscription" name="type" class="input-form">
+            <div class="display-error"></div>
+            <input type="hidden" id="inscription" value="connexion" name="type" class="input-form">
             <button class="btn-form type="submit">Envoyer</button>
         </form>
     </div>
 </main>
+<?php include 'footer.php' ?>
 </body>
 </html>
 <script src="script.js"></script>

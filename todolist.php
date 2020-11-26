@@ -17,9 +17,9 @@
     <title></title>
 </head>
 <body>
+<?php include 'header.php' ?>
 <main>
 </main>
-<footer>
-</footer>
+<?php include 'footer.php' ?>
 </body>
 </html>

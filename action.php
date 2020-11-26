@@ -12,8 +12,10 @@ if (in_array($_POST['type'], ['inscription', 'connexion'])) {
     }
 
     if ($_POST['type'] == "connexion") {
-        $url = "index.php";
+        $url = "todolist.php";
         $error = $account->connexion();
         $return = [$url, $error];
     }
 }
+
+echo json_encode($return);
