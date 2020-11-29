@@ -14,11 +14,27 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <title></title>
+    <link rel="stylesheet" href="styles/style.css">
+    <title> TO DO LIST</title>
 </head>
 <body>
 <?php include 'header.php' ?>
 <main>
+    <div class="container-list">
+   <form action="action.php">
+       <div class="flex">
+         <input type="text" name="tache" placeholder="Entrez votre tâche" class="tache">
+       <button class="add"> Ajouter</button>
+       </div>
+    </div>
+     </form>
+    </div>
+    <!---<div class="list">
+        <input type="checkbox">
+        <h2 class="name">Ma tâche</h2>
+        <small>Creér le 27/11/2020</small>
+    </div>
+    </div>--->
 </main>
 <?php include 'footer.php' ?>
 </body>
