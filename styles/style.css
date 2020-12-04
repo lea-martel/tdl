@@ -170,3 +170,28 @@ input {
 
 }
 
+.list {
+
+    width: 100%;
+    background-color:#86DEB7;
+    margin: 30px auto;
+    padding: 15px;
+    border-radius: 5px;
+
+}
+.list_item{
+    display: flex;
+    align-items: center;
+    padding: 3px;
+}
+
+.check {
+
+    padding: 5px
+}
+.list-item-info{
+    padding-left: 10px;
+}
+
+
+

@@ -16,6 +16,12 @@ if (in_array($_POST['type'], ['inscription', 'connexion'])) {
         $error = $account->connexion();
         $return = [$url, $error];
     }
+
+}
+if($_POST['type'] == 'tache')
+{
+    $todoList = new Base\actionTodolist();
+    $return = $todoList->addList();
 }
 
 echo json_encode($return);

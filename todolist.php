@@ -18,24 +18,70 @@
     <title> TO DO LIST</title>
 </head>
 <body>
-<?php include 'header.php' ?>
+<?php include 'header.php';
+$todoList = new Base\actionTodolist();
+$dataTime = new DateTime();
+
+?>
 <main>
     <div class="container-list">
-   <form action="action.php">
+   <form action="action.php" method="post" class="ajax-submit">
        <div class="flex">
          <input type="text" name="tache" placeholder="Entrez votre tâche" class="tache">
-       <button class="add"> Ajouter</button>
+           <input type="hidden" name="type" value="tache">
+       <button type="submit" class="add"> Ajouter</button>
        </div>
-    </div>
      </form>
+    <div class="list">
+        <?php foreach ($todoList->selectList() as $list) { ?>
+            <div class="list-content">
+                <div class="list_item">
+                    <div class="list-item-inner">
+                        <input type="checkbox" style="width: 20px" class="check">
+                    </div>
+                    <div class="list-item-info">
+                        <?= $list['nom'] ?>
+                        <?= $dataTime->setTimestamp($list['date_creation'])->format('d/m/Y H:i') ?>
+                    </div>
+                </div>
+            </div>
+        <?php } ?>
     </div>
-    <!---<div class="list">
-        <input type="checkbox">
-        <h2 class="name">Ma tâche</h2>
-        <small>Creér le 27/11/2020</small>
-    </div>
-    </div>--->
 </main>
 <?php include 'footer.php' ?>
 </body>
 </html>
+<script>
+    function appendEntity(entity)
+    {
+        console.log(entity.nom)
+        let html = '<div class="list-content">'
+        html += '<div class="list_item">';
+        html += '<div class="list-item-inner">';
+        html += "<input type=\"checkbox\" style=\"width: 20px\">";
+        html += '</div>';
+        html += '<div class="list-item-info">';
+        html += entity.nom + ' ';
+        html += entity.date;
+        html += '</div>';
+        return html + '</div>' + '</div>';
+    }
+    $('.ajax-submit').submit(function (e) {
+        e.preventDefault();
+        var self = this;
+        $.ajax({
+            url : $(this).attr('action'),
+            method : $(this).attr('method'),
+            data : $(this).serialize(),
+            dataType : 'json',
+            success : (data) => {
+                console.log(data);
+                $('.list').prepend(appendEntity(data.list));
+                $('.tache').val('')
+            },
+            error : (error) => {
+                console.log(error.responseText)
+            }
+        })
+    });
+</script>
