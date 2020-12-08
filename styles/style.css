@@ -18,17 +18,16 @@ header {
 
 .title {
 
-    display: flex;
-    justify-content: center;
+    text-align: center;
     margin-top: 5vh;
-    color: #1d3557;
+    color: #1f4278;
 }
 
 .text {
 
     text-align: center;
     font-size: 40px;
-    color: #1d3557;
+    color: #1f4278;
 }
 
 /**FORM**/
@@ -53,7 +52,7 @@ header {
 
 .form-co label {
 
-    color: #1d3557;
+    color: #1f4278;
     font-size: 20px;
 }
 
@@ -100,7 +99,7 @@ header {
 
 .btn-form:hover {
 
-    background: #172948;
+    background: #1f4278;
 
 }
 
@@ -123,8 +122,10 @@ footer {
     margin: auto;
     font-size: 15px;
     font-weight: bold;
-    color: #1d3557;
+    color: #1f4278;
 }
+
+/**LIST**/
 
 .container-list {
 
@@ -157,7 +158,7 @@ input {
 
 .add {
 
-    background-color: #172948;
+    background-color: #1f4278;
     outline: none;
     border: none;
     border-radius: 4px;
@@ -179,19 +180,82 @@ input {
     border-radius: 5px;
 
 }
-.list_item{
-    display: flex;
+
+.top {
+
+    color: #1f4278;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+.list_item {
+
+    display: block;
     align-items: center;
-    padding: 3px;
+    padding: 8px;
+    width: 100%;
+    margin: 10px auto;
+    background-color: white;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
 }
 
-.check {
+.list_item input {
 
-    padding: 5px
+    margin: 0 3px;
 }
-.list-item-info{
+
+.remove {
+
+    display: block;
+    float: right;
+    width: 30px;
+    height: 30px;
+    color: #86DEB7;
+    font-weight: bold;
+    padding: 0px 10px;
+    border-radius: 50%;
+    margin-top: 5px;
+    text-decoration: none;
+    font-size: 25px;
+    transition: background 1s;
+    cursor: pointer;
+}
+
+.remove:hover {
+
+
+}
+
+.checked {
+
+    padding: 5px;
+    color: #999 !important;
+    text-decoration: line-through;
+}
+
+h5 {
+
+    display: flex;
+    font-weight: bold;
+    font-size: 17px;
+    color: #4672af;
+}
+
+.h3 {
+
+    display: flex;
+    flex-direction: row;
+    color: #1f4278;
+}
+
+.txt {
+
+    display: block;
+    width: 100%;
     padding-left: 10px;
+    font-weight: normal;
+    color: black;
+    
 }
-
-
 

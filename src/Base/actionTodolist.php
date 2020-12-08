@@ -41,4 +41,35 @@ class actionTodolist extends DataBase
 
 
     }
+
+    public function deleteList()
+    {
+        $delete = $_POST['id'];
+        $this->query('DELETE FROM list WHERE id = ?', [
+            $delete
+        ]);
+
+        return $delete;
+
+    }
+
+    public function checkedList()
+    {
+        $id = $_SESSION['id'];
+        $checked = $_POST['checked'];
+        $check = $checked ? 1 : 0;
+        $this->query('SELECT id, checked FROM list WHERE id = ?',[
+            $id,
+            $checked,
+        ])->fetch(\PDO::FETCH_ASSOC);
+        $this->query("UPDATE todos SET checked=$check WHERE id=$id");
+        if ($response) {
+
+            echo $checked;
+
+        }else {
+            echo "error";
+        }
+
+    }
 }

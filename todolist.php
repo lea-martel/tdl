@@ -25,7 +25,7 @@ $dataTime = new DateTime();
 ?>
 <main>
     <div class="container-list">
-   <form action="action.php" method="post" class="ajax-submit">
+   <form action="action.php" method="post" class="ajax-submit" autocomplete="off">
        <div class="flex">
          <input type="text" name="tache" placeholder="Entrez votre tâche" class="tache">
            <input type="hidden" name="type" value="tache">
@@ -33,16 +33,24 @@ $dataTime = new DateTime();
        </div>
      </form>
     <div class="list">
+        <h6 class="top">Ma liste de tâche</h6>
         <?php foreach ($todoList->selectList() as $list) { ?>
             <div class="list-content">
                 <div class="list_item">
-                    <div class="list-item-inner">
-                        <input type="checkbox" style="width: 20px" class="check">
-                    </div>
+                    <span id="<?php $list['id'] ?>"
+                          class="remove">x</span>
+                    <?php if($list['checked']) { ?>
+                        <input type="checkbox" style="width: 20px" class="check-box" data-todo-id="<?php $list['id'] ?>"/>
+                    <h5 class="checked"><?= $list['nom'] ?></h5>
+                    <?php } else { ?>
+                    <input type="checkbox" style="width: 20px" class="check-box" data-todo-id="<?php $list['id'] ?>"/>
+                    <h5><?= $list['nom'] ?></h5>
+                    <?php } ?>
                     <div class="list-item-info">
-                        <?= $list['nom'] ?>
+                        <div class="txt">Crée le
                         <?= $dataTime->setTimestamp($list['date_creation'])->format('d/m/Y H:i') ?>
                     </div>
+                </div>
                 </div>
             </div>
         <?php } ?>
@@ -52,6 +60,45 @@ $dataTime = new DateTime();
 </body>
 </html>
 <script>
+
+    $(document).ready(function(){
+        $('.remove').click(function(){
+            const id = $(this).attr('id');
+            alert(id);
+
+            $.post("action.php",
+                {
+                id: id
+                },
+                (data) => {
+                    if (data) {
+                        $(this).parent().hide(600);
+                    }
+                }
+            );
+        });
+
+        $(".check-box").click(function(e) {
+            const id = $(this).attr('data-todo-id')
+
+            $.post('action.php',
+                {
+                    id: id
+                },
+                (data) => {
+                if (data != 'error') {
+                    const h5 = $(this).next();
+                    if(data === '1') {
+                        h5.removeClass('checked');
+                    } else {
+                        h5.addClass('checked');
+                    }
+                }
+            })
+        })
+    });
+
+
     function appendEntity(entity)
     {
         console.log(entity.nom)
@@ -61,6 +108,7 @@ $dataTime = new DateTime();
         html += "<input type=\"checkbox\" style=\"width: 20px\">";
         html += '</div>';
         html += '<div class="list-item-info">';
+        html += '<div class="remove">';
         html += entity.nom + ' ';
         html += entity.date;
         html += '</div>';

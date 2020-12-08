@@ -18,10 +18,17 @@ if (in_array($_POST['type'], ['inscription', 'connexion'])) {
     }
 
 }
+
 if($_POST['type'] == 'tache')
 {
     $todoList = new Base\actionTodolist();
     $return = $todoList->addList();
+}
+
+if ($_POST['type'] == "deleteList") {
+    $todoList = new Base\actionTodolist();
+    $error = $todolist->deleteList();
+    $return = [$url, $error];
 }
 
 echo json_encode($return);
