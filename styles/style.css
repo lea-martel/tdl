@@ -205,6 +205,12 @@ input {
     margin: 0 3px;
 }
 
+.list_item h5 {
+
+    display: inline-block;
+    padding: 5px 0px;
+}
+
 .remove {
 
     display: block;
@@ -236,24 +242,16 @@ input {
 
 h5 {
 
-    display: flex;
     font-weight: bold;
-    font-size: 17px;
+    font-size: 20px;
     color: #4672af;
-}
-
-.h3 {
-
-    display: flex;
-    flex-direction: row;
-    color: #1f4278;
 }
 
 .txt {
 
     display: block;
     width: 100%;
-    padding-left: 10px;
+    padding: 0px 30px;
     font-weight: normal;
     color: black;
     

@@ -34,85 +34,108 @@ $dataTime = new DateTime();
      </form>
     <div class="list">
         <h6 class="top">Ma liste de tâche</h6>
-        <?php foreach ($todoList->selectList() as $list) { ?>
-            <div class="list-content">
-                <div class="list_item">
-                    <span id="<?php $list['id'] ?>"
-                          class="remove">x</span>
-                    <?php if($list['checked']) { ?>
-                        <input type="checkbox" style="width: 20px" class="check-box" data-todo-id="<?php $list['id'] ?>"/>
-                    <h5 class="checked"><?= $list['nom'] ?></h5>
-                    <?php } else { ?>
-                    <input type="checkbox" style="width: 20px" class="check-box" data-todo-id="<?php $list['id'] ?>"/>
-                    <h5><?= $list['nom'] ?></h5>
-                    <?php } ?>
-                    <div class="list-item-info">
-                        <div class="txt">Crée le
-                        <?= $dataTime->setTimestamp($list['date_creation'])->format('d/m/Y H:i') ?>
+        <div class="list-content-other">
+            <?php foreach ($todoList->selectList() as $list) { ?>
+                <div class="list-content">
+                    <div class="list_item">
+                    <span id="<?= $list['id'] ?>"
+                          class="remove" data-entity-id="<?= $list['id'] ?>">x</span>
+                        <?php if ($list['checked']) { ?>
+                            <input type="checkbox" style="width: 20px" class="check-box"
+                                   data-todo-id="<?= $list['id'] ?>" checked/>
+                            <h5 class="h5-list checked"><?= $list['nom'] ?></h5>
+                        <?php } else { ?>
+                            <input type="checkbox" style="width: 20px" class="check-box"
+                                   data-todo-id="<?= $list['id'] ?>"/>
+                            <h5 class="h5-list"><?= $list['nom'] ?></h5>
+                        <?php } ?>
+                        <div class="list-item-info">
+                            <div class="txt">Crée le
+                                <?= $dataTime->setTimestamp($list['date_creation'])->format('d/m/Y H:i') ?>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                </div>
-            </div>
-        <?php } ?>
+            <?php } ?>
+        </div>
+
     </div>
 </main>
 <?php include 'footer.php' ?>
 </body>
 </html>
 <script>
-
-    $(document).ready(function(){
-        $('.remove').click(function(){
-            const id = $(this).attr('id');
-            alert(id);
-
-            $.post("action.php",
-                {
-                id: id
-                },
-                (data) => {
-                    if (data) {
-                        $(this).parent().hide(600);
-                    }
-                }
-            );
-        });
-
-        $(".check-box").click(function(e) {
-            const id = $(this).attr('data-todo-id')
-
-            $.post('action.php',
-                {
-                    id: id
-                },
-                (data) => {
-                if (data != 'error') {
-                    const h5 = $(this).next();
-                    if(data === '1') {
-                        h5.removeClass('checked');
-                    } else {
-                        h5.addClass('checked');
-                    }
-                }
-            })
-        })
-    });
-
-
     function appendEntity(entity)
     {
         console.log(entity.nom)
         let html = '<div class="list-content">'
         html += '<div class="list_item">';
-        html += '<div class="list-item-inner">';
-        html += "<input type=\"checkbox\" style=\"width: 20px\">";
-        html += '</div>';
-        html += '<div class="list-item-info">';
-        html += '<div class="remove">';
+        html += ' <span id="' + entity.id + '"\n'+
+'                          class="remove" data-entity-id="' + entity.id + '">x</span>'
+        html += "<input type=\"checkbox\" style=\"width: 20px\" class='check-box' data-todo-id=\"" + entity.id + "\">";
+        html += '<h5 class="h5-list">'
         html += entity.nom + ' ';
+        html += '</h5>';
+        html += '<div class="list-item-info">';
+        html += '<div class="txt">';
         html += entity.date;
         html += '</div>';
+        html += '</div>';
         return html + '</div>' + '</div>';
+    }
+    $(document).ready(function(){
+        callback();
+    });
+    function callback()
+    {
+        $('.remove').click(function(){
+            let id = $(this).data('entity-id');
+            console.log(id)
+            var self = this;
+            $.ajax({
+                url : "action.php",
+                method : 'post',
+                data : {
+                    id: id,
+                    type : 'deleteList'
+                },
+                dataType : 'json',
+                success : (data) => {
+                    $(self).closest('.list-content').hide(600);
+                    console.log(data)
+                },
+                error : (error) => {
+                    console.log(error.responseText)
+                }
+            })
+
+        });
+
+        $(".check-box").click(function(e) {
+            const id = $(this).attr('data-todo-id')
+            let parent = $(this).closest('.list-content');
+
+            $.ajax({
+                url : "action.php",
+                method : 'post',
+                data : {
+                    id: id,
+                    type : 'checkedList'
+                },
+                dataType : 'json',
+                success : (data) => {
+                    let h5 = parent.find('.h5-list');
+                    if(!data[1].checked) {
+                        h5.removeClass('checked');console.log(id, parent)
+                    } else {
+                        h5.addClass('checked');
+                    }
+                },
+                error : (error) => {
+                    console.log(error.responseText)
+                }
+            })
+        })
     }
     $('.ajax-submit').submit(function (e) {
         e.preventDefault();
@@ -124,8 +147,8 @@ $dataTime = new DateTime();
             dataType : 'json',
             success : (data) => {
                 console.log(data);
-                $('.list').prepend(appendEntity(data.list));
-                $('.tache').val('')
+                $('.list-content-other').prepend(appendEntity(data.list));
+                $('.tache').val('');
             },
             error : (error) => {
                 console.log(error.responseText)

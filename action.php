@@ -27,8 +27,14 @@ if($_POST['type'] == 'tache')
 
 if ($_POST['type'] == "deleteList") {
     $todoList = new Base\actionTodolist();
-    $error = $todolist->deleteList();
+    $error = $todoList->deleteList();
+    $url  = 'dsffq';
     $return = [$url, $error];
 }
-
+if ($_POST['type'] == "checkedList") {
+    $todoList = new Base\actionTodolist();
+    $error = $todoList->checkedList();
+    $url  = 'dsffq';
+    $return = [$url, $error];
+}
 echo json_encode($return);
