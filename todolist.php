@@ -26,13 +26,14 @@ $dataTime = new DateTime();
 ?>
 <main>
     <div class="container-list">
-   <form action="action.php" method="post" class="ajax-submit" autocomplete="off">
-       <div class="flex">
-         <input type="text" name="tache" placeholder="Entrez votre tâche" class="tache">
-           <input type="hidden" name="type" value="tache">
-       <button type="submit" class="add"> Ajouter</button>
-       </div>
-     </form>
+       <form action="action.php" method="post" class="ajax-submit" autocomplete="off">
+           <div class="flex">
+             <input type="text" name="tache" placeholder="Entrez votre tâche" class="tache">
+               <input type="hidden" name="type" value="tache">
+           <button type="submit" class="add"> Ajouter</button>
+           </div>
+         </form>
+    </div>
     <div class="list">
         <h6 class="top">Ma liste de tâche</h6>
         <div class="list-content-other">
