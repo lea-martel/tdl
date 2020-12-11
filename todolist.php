@@ -37,7 +37,7 @@ $dataTime = new DateTime();
         <h6 class="top">Ma liste de tâche</h6>
         <div class="list-content-other">
             <?php foreach ($todoList->selectList() as $list) { ?>
-                <div class="list-content">
+                <div class="list-content old-todo-list">
                     <div class="list_item">
                     <span id="<?= $list['id'] ?>"
                           class="remove" data-entity-id="<?= $list['id'] ?>">x</span>
@@ -65,10 +65,11 @@ $dataTime = new DateTime();
 </body>
 </html>
 <script>
+    var idTodo = 1;
     function appendEntity(entity)
     {
         console.log(entity.nom)
-        let html = '<div class="list-content">'
+        let html = '<div class="list-content new-todo-list-' + idTodo + '">'
         html += '<div class="list_item">';
         html += ' <span id="' + entity.id + '"\n'+
 '                          class="remove" data-entity-id="' + entity.id + '">x</span>'
@@ -85,11 +86,11 @@ $dataTime = new DateTime();
     }
 
     $(document).ready(function(){
-        callback();
+        callback('old-todo-list');
     });
-    function callback()
+    function callback(masterCLass)
     {
-        $('.remove').click(function(){
+        $('.' + masterCLass + ' .remove').click(function(){
             let id = $(this).data('entity-id');
             console.log(id)
             var self = this;
@@ -112,7 +113,7 @@ $dataTime = new DateTime();
 
         });
 
-        $(".check-box").click(function(e) {
+        $('.' + masterCLass + " .check-box").click(function(e) {
             const id = $(this).attr('data-todo-id')
             let parent = $(this).closest('.list-content');
 
@@ -150,6 +151,8 @@ $dataTime = new DateTime();
                 console.log(data);
                 $('.list-content-other').prepend(appendEntity(data.list));
                 $('.tache').val('');
+                callback('new-todo-list-' + idTodo);
+                idTodo++;
             },
             error : (error) => {
                 console.log(error.responseText)
